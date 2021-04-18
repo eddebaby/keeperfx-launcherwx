@@ -25,6 +25,7 @@ class wxImagePanel;
 class LauncherFrame;
 class FilelistChecker;
 class CommandOptions;
+class InstallMethods;
 class GameSettings;
 
 // ----------------------------------------------------------------------------
@@ -69,6 +70,8 @@ class LauncherFrame : public wxImageFrame
 
     CommandOptions * cmdOpts;
 
+    InstallMethods * instMethod;
+
 public:
     // ctor(s)/dtor(s)
     LauncherFrame(const wxString& title);
@@ -90,9 +93,14 @@ public:
 
     // Own utility functions
     void recheckBasicFiles(void);
+    void onInstallChooseFolder(void);
+    void onInstallAutoFindFiles(void);
+
     std::wstring getSystemStartCommand(void);
 
 private:
+    void searchForDKFiles(void);
+
     // any class wishing to process wxWidgets events must use this macro
     DECLARE_EVENT_TABLE()
 };
@@ -104,17 +112,17 @@ private:
 // IDs for the controls and the menu commands
 enum
 {
-	Event_Quit = wxID_EXIT,
-	Event_Settings = wxID_PROPERTIES,
+    Event_Quit = wxID_EXIT,
+    Event_Settings = wxID_PROPERTIES,
     Event_Options = wxID_PREFERENCES,
-	Event_Install = wxID_SETUP,
-	Event_RunGame = wxID_OPEN,
+    Event_Install = wxID_SETUP,
+    Event_RunGame = wxID_OPEN,
     Event_Readme = wxID_HELP,
     Event_Logfile = wxID_INDEX,
 
     // it is important for the id corresponding to the "About" command to have
     // this standard value as otherwise it won't be handled properly under Mac
     // (where it is special and put into the "Apple" menu)
-	Event_About = wxID_ABOUT
+    Event_About = wxID_ABOUT
 };
 #endif

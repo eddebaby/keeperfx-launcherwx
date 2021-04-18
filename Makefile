@@ -35,6 +35,7 @@ obj/wxCheckRadioBox.o \
 obj/LauncherApp.o \
 obj/GameSettings.o \
 obj/CommandOptions.o \
+obj/InstallMethods.o \
 obj/FilelistChecker.o \
 obj/LogViewer.o \
 obj/md5.o \

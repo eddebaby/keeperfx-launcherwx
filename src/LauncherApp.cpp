@@ -23,6 +23,7 @@
 #include "FilelistChecker.hpp"
 #include "GameSettings.hpp"
 #include "CommandOptions.hpp"
+#include "InstallMethods.hpp"
 
 //TODO: finish checking files integrity; make integrity check button
 //TODO: make launching the game
@@ -160,6 +161,7 @@ LauncherFrame::LauncherFrame(const wxString& title)
 LauncherFrame::~LauncherFrame()
 {
     delete wxLog::SetActiveTarget(logTarget);
+    instMethod->Destroy();
     cmdOpts->Destroy();
 }
 
@@ -168,6 +170,7 @@ LauncherFrame::~LauncherFrame()
 void LauncherFrame::onShow(wxShowEvent& WXUNUSED(event))
 {
     cmdOpts = new CommandOptions(this);
+    instMethod = new InstallMethods(this);
     recheckBasicFiles();
     cmdOpts->readOptions();
 }
@@ -222,6 +225,26 @@ void LauncherFrame::onMouseMove(wxMouseEvent& event)
 }
 
 void LauncherFrame::onInstall(wxCommandEvent& WXUNUSED(event))
+{
+    instMethod->ShowModal();
+    //recheckBasicFiles();
+}
+
+void LauncherFrame::onInstallAutoFindFiles(void)
+{
+    searchForDKFiles();
+    recheckBasicFiles();
+}
+void LauncherFrame::searchForDKFiles(void)
+{
+    // Add file searching code here...
+
+    // Just show a message box saying "coming soon" for now
+    wxMessageBox(_T("Coming Soon..."),
+    _T("Auto-Find Dungeon Keeper Files"), wxOK | wxOK_DEFAULT | wxICON_INFORMATION, this);
+}
+
+void LauncherFrame::onInstallChooseFolder(void)
 {
     {
         wxDirDialog dialog(this, _T("Select \"keeper\" folder with original Dungeon Keeper files"), installSrcDir, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
